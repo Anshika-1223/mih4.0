@@ -1,0 +1,1218 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hackathon 2024</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(20,0,0,0.90) 50%, rgba(0,0,0,0.95) 100%),
+                        url('https://i.pinimg.com/736x/af/45/6a/af456a9c7cd83d42697cbddc3d81fcc2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(220,38,38,0.3);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(0,0,0,0.98);
+            box-shadow: 0 4px 30px rgba(220,38,38,0.2);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #dc2626 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #dc2626, #ef4444);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 8rem 5%;
+            position: relative;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 10rem;
+        }
+
+        .glitch-wrapper {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 6rem;
+            font-weight: 900;
+            margin-bottom: 0;
+            letter-spacing: 8px;
+            animation: fadeInUp 1s ease;
+            background: linear-gradient(135deg, #fff 0%, #dc2626 50%, #fff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite, fadeInUp 1s ease;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .hero-tagline {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #dc2626;
+            margin-bottom: 3rem;
+            letter-spacing: 4px;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .hero-details {
+            display: flex;
+            gap: 4rem;
+            margin-bottom: 3rem;
+            font-size: 1.4rem;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-label {
+            color: #999;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .detail-value {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+
+        .cta-button {
+            padding: 1.5rem 4rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s backwards, pulse 2s ease-in-out infinite;
+            box-shadow: 0 10px 40px rgba(220,38,38,0.4);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(220,38,38,0.6);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 10px 40px rgba(220,38,38,0.4);
+            }
+            50% {
+                box-shadow: 0 15px 60px rgba(220,38,38,0.6);
+            }
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            letter-spacing: 4px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #dc2626, #ef4444);
+            border-radius: 2px;
+        }
+
+        .content-card {
+            background: rgba(20,20,20,0.8);
+            border: 1px solid rgba(220,38,38,0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(220,38,38,0.6);
+            box-shadow: 0 20px 60px rgba(220,38,38,0.3);
+        }
+
+        .content-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: #dc2626;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .content-card p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        .organizers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .organizer-card {
+            background: rgba(20,20,20,0.9);
+            border: 1px solid rgba(220,38,38,0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .organizer-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: #dc2626;
+            box-shadow: 0 15px 40px rgba(220,38,38,0.4);
+        }
+
+        .organizer-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: #dc2626;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .domain-card {
+            background: rgba(20,20,20,0.8);
+            border: 2px solid rgba(220,38,38,0.3);
+            border-radius: 15px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .domain-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(220,38,38,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .domain-card:hover::before {
+            opacity: 1;
+        }
+
+        .domain-card:hover {
+            transform: translateY(-15px);
+            border-color: #dc2626;
+            box-shadow: 0 20px 50px rgba(220,38,38,0.4);
+        }
+
+        .domain-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .domain-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: rgba(20,20,20,0.9);
+            border: 1px solid rgba(220,38,38,0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+            border-color: #dc2626;
+            box-shadow: 0 15px 40px rgba(220,38,38,0.3);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            order: 2;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #dc2626;
+            border-radius: 50%;
+            border: 4px solid #000;
+            box-shadow: 0 0 20px rgba(220,38,38,0.6);
+        }
+
+        .timeline-date {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: #dc2626;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .prizes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .prize-card {
+            background: rgba(20,20,20,0.9);
+            border: 2px solid rgba(220,38,38,0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .prize-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(220,38,38,0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .prize-card:hover::before {
+            opacity: 1;
+        }
+
+        .prize-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: #dc2626;
+            box-shadow: 0 25px 60px rgba(220,38,38,0.5);
+        }
+
+        .prize-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .prize-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: #dc2626;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .prize-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .partner-card {
+            background: rgba(20,20,20,0.9);
+            border: 1px solid rgba(220,38,38,0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+        }
+
+        .partner-card:hover {
+            transform: scale(1.1);
+            border-color: #dc2626;
+            box-shadow: 0 15px 40px rgba(220,38,38,0.4);
+        }
+
+        .partner-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: rgba(20,20,20,0.8);
+            border: 1px solid rgba(220,38,38,0.3);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: #dc2626;
+        }
+
+        .faq-question {
+            padding: 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .faq-question:hover {
+            background: rgba(220,38,38,0.1);
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: #dc2626;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 2rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 2rem 2rem 2rem;
+        }
+
+        .faq-answer p {
+            color: #ccc;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-info {
+            background: rgba(20,20,20,0.9);
+            border: 1px solid rgba(220,38,38,0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: #dc2626;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .contact-item p {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 60px;
+            height: 60px;
+            background: rgba(220,38,38,0.2);
+            border: 2px solid rgba(220,38,38,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #dc2626;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-link:hover {
+            background: #dc2626;
+            color: #fff;
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(220,38,38,0.5);
+        }
+
+        footer {
+            background: rgba(0,0,0,0.95);
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(220,38,38,0.3);
+        }
+
+        footer p {
+            color: #999;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.5rem;
+                letter-spacing: 4px;
+            }
+
+            .hero-tagline {
+                font-size: 1.3rem;
+            }
+
+            .hero-details {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-content {
+                order: 1;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="background-container"></div>
+  <div class="main-wrapper">
+   <nav id="navbar">
+    <div class="nav-content">
+     <div class="logo">
+      MIH
+     </div>
+     <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#organizers">Organizers</a></li>
+      <li><a href="#domains">Domains</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#prizes">Prizes</a></li>
+      <li><a href="#partners">Partners</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+     </ul>
+    </div>
+   </nav>
+   <section id="home" class="hero">
+    <div class="glitch-wrapper">
+     <h1 class="hero-title" id="hackathonName">MAKE IT HAPPEN</h1>
+    </div>
+    <p class="hero-tagline" id="tagline">Transform Ideas Into Reality</p>
+    <div class="hero-details">
+     <div class="detail-item"><span class="detail-label">Date</span> <span class="detail-value" id="eventDate">March 15-17, 2024</span>
+     </div>
+     <div class="detail-item"><span class="detail-label">Venue</span> <span class="detail-value" id="venue">IIMT Campus</span>
+     </div>
+    </div><button class="cta-button" onclick="scrollToSection('contact')">REGISTER NOW</button>
+   </section>
+   <section id="about">
+    <h2 class="section-title">ABOUT MIH</h2>
+    <div class="content-card">
+     <h3>Our Vision</h3>
+     <p id="aboutMih">Make It Happen is an annual hackathon that brings together the brightest minds in technology to solve real-world problems. Over 48 hours, participants collaborate, innovate, and build groundbreaking solutions across multiple domains. Join us for an unforgettable experience of learning, networking, and creation.</p>
+    </div>
+    <div class="content-card">
+     <h3>Previous Versions</h3>
+     <p>Since its inception, MIH has grown into one of the most anticipated tech events in the region. Previous editions have seen over 500+ participants, 100+ projects, and countless innovations that have gone on to make real-world impact. Our alumni have launched successful startups, won international competitions, and contributed to cutting-edge research.</p>
+    </div>
+   </section>
+   <section id="organizers">
+    <h2 class="section-title">ORGANIZERS</h2>
+    <p class="content-card" id="organizersText" style="text-align: center; font-size: 1.3rem;">Organized by IIMT in collaboration with IIIT Delhi, in association with IIMT Ladder Business Foundation and Botlab Dynamics</p>
+    <div class="organizers-grid">
+     <div class="organizer-card">
+      <h4>IIMT</h4>
+      <p>Institute of Information Management &amp; Technology</p>
+     </div>
+     <div class="organizer-card">
+      <h4>IIIT Delhi</h4>
+      <p>Indraprastha Institute of Information Technology</p>
+     </div>
+     <div class="organizer-card">
+      <h4>IIMT LBF</h4>
+      <p>Ladder Business Foundation</p>
+     </div>
+     <div class="organizer-card">
+      <h4>Botlab Dynamics</h4>
+      <p>Robotics &amp; AI Innovation Partner</p>
+     </div>
+    </div>
+   </section>
+   <section id="domains">
+    <h2 class="section-title">DOMAINS</h2>
+    <div class="domains-grid">
+     <div class="domain-card">
+      <div class="domain-icon">
+       🤖
+      </div>
+      <h4>AI &amp; ML</h4>
+      <p>Artificial Intelligence and Machine Learning innovations</p>
+     </div>
+     <div class="domain-card">
+      <div class="domain-icon">
+       🌐
+      </div>
+      <h4>Web3 &amp; Blockchain</h4>
+      <p>Decentralized applications and blockchain solutions</p>
+     </div>
+     <div class="domain-card">
+      <div class="domain-icon">
+       🏥
+      </div>
+      <h4>Healthcare</h4>
+      <p>Digital health and medical technology</p>
+     </div>
+     <div class="domain-card">
+      <div class="domain-icon">
+       🌱
+      </div>
+      <h4>Sustainability</h4>
+      <p>Environmental and climate tech solutions</p>
+     </div>
+     <div class="domain-card">
+      <div class="domain-icon">
+       🎓
+      </div>
+      <h4>EdTech</h4>
+      <p>Educational technology and learning platforms</p>
+     </div>
+     <div class="domain-card">
+      <div class="domain-icon">
+       🔒
+      </div>
+      <h4>Cybersecurity</h4>
+      <p>Security solutions and privacy protection</p>
+     </div>
+    </div>
+   </section>
+   <section id="timeline">
+    <h2 class="section-title">TIMELINE</h2>
+    <div class="timeline">
+     <div class="timeline-item">
+      <div class="timeline-content">
+       <div class="timeline-date">
+        February 15
+       </div>
+       <h4>Registration Opens</h4>
+       <p>Sign up and form your teams</p>
+      </div>
+      <div class="timeline-dot"></div>
+     </div>
+     <div class="timeline-item">
+      <div class="timeline-content">
+       <div class="timeline-date">
+        March 1
+       </div>
+       <h4>Registration Closes</h4>
+       <p>Final date to register</p>
+      </div>
+      <div class="timeline-dot"></div>
+     </div>
+     <div class="timeline-item">
+      <div class="timeline-content">
+       <div class="timeline-date">
+        March 15 - 9:00 AM
+       </div>
+       <h4>Opening Ceremony</h4>
+       <p>Kickoff and problem statements revealed</p>
+      </div>
+      <div class="timeline-dot"></div>
+     </div>
+     <div class="timeline-item">
+      <div class="timeline-content">
+       <div class="timeline-date">
+        March 15-17
+       </div>
+       <h4>Hacking Period</h4>
+       <p>48 hours of intense coding and innovation</p>
+      </div>
+      <div class="timeline-dot"></div>
+     </div>
+     <div class="timeline-item">
+      <div class="timeline-content">
+       <div class="timeline-date">
+        March 17 - 2:00 PM
+       </div>
+       <h4>Project Submission</h4>
+       <p>Final submissions deadline</p>
+      </div>
+      <div class="timeline-dot"></div>
+     </div>
+     <div class="timeline-item">
+      <div class="timeline-content">
+       <div class="timeline-date">
+        March 17 - 6:00 PM
+       </div>
+       <h4>Awards Ceremony</h4>
+       <p>Winners announced and prizes distributed</p>
+      </div>
+      <div class="timeline-dot"></div>
+     </div>
+    </div>
+   </section>
+   <section id="prizes">
+    <h2 class="section-title">PRIZES</h2>
+    <div class="prizes-grid">
+     <div class="prize-card">
+      <div class="prize-icon">
+       🥇
+      </div>
+      <h3 class="prize-title">FIRST PLACE</h3>
+      <div class="prize-amount">
+       ₹1,00,000
+      </div>
+      <p>Cash Prize + Internship Opportunities</p>
+     </div>
+     <div class="prize-card">
+      <div class="prize-icon">
+       🥈
+      </div>
+      <h3 class="prize-title">SECOND PLACE</h3>
+      <div class="prize-amount">
+       ₹50,000
+      </div>
+      <p>Cash Prize + Mentorship Program</p>
+     </div>
+     <div class="prize-card">
+      <div class="prize-icon">
+       🥉
+      </div>
+      <h3 class="prize-title">THIRD PLACE</h3>
+      <div class="prize-amount">
+       ₹25,000
+      </div>
+      <p>Cash Prize + Tech Goodies</p>
+     </div>
+    </div>
+   </section>
+   <section id="partners">
+    <h2 class="section-title">PARTNERS</h2>
+    <div class="partners-grid">
+     <div class="partner-card">
+      <div class="partner-name">
+       Google Cloud
+      </div>
+     </div>
+     <div class="partner-card">
+      <div class="partner-name">
+       Microsoft Azure
+      </div>
+     </div>
+     <div class="partner-card">
+      <div class="partner-name">
+       GitHub
+      </div>
+     </div>
+     <div class="partner-card">
+      <div class="partner-name">
+       AWS
+      </div>
+     </div>
+     <div class="partner-card">
+      <div class="partner-name">
+       DigitalOcean
+      </div>
+     </div>
+     <div class="partner-card">
+      <div class="partner-name">
+       Vercel
+      </div>
+     </div>
+    </div>
+   </section>
+   <section id="faq">
+    <h2 class="section-title">FREQUENTLY ASKED QUESTIONS</h2>
+    <div class="faq-container">
+     <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)"><span>Who can participate in the hackathon?</span> <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">
+       <p>The hackathon is open to all students, professionals, and tech enthusiasts. You can participate individually or in teams of up to 4 members.</p>
+      </div>
+     </div>
+     <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)"><span>Is there a registration fee?</span> <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">
+       <p>No, participation in Make It Happen is completely free! We believe in making innovation accessible to everyone.</p>
+      </div>
+     </div>
+     <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)"><span>What should I bring to the event?</span> <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">
+       <p>Bring your laptop, chargers, student ID, and your creativity! We'll provide WiFi, meals, snacks, and plenty of energy drinks.</p>
+      </div>
+     </div>
+     <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)"><span>Will accommodation be provided?</span> <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">
+       <p>Yes, sleeping arrangements and rest areas will be available for participants who need them during the 48-hour hackathon.</p>
+      </div>
+     </div>
+     <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)"><span>What if I don't have a team?</span> <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">
+       <p>Don't worry! We'll have a team formation session at the beginning where you can meet other participants and form teams.</p>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section id="contact">
+    <h2 class="section-title">CONTACT US</h2>
+    <div class="contact-container">
+     <div class="contact-info">
+      <div class="contact-item">
+       <h4>Email</h4>
+       <p>contact@makeithappen.tech</p>
+      </div>
+      <div class="contact-item">
+       <h4>Phone</h4>
+       <p>+91 98765 43210</p>
+      </div>
+      <div class="contact-item">
+       <h4>Address</h4>
+       <p>IIMT Campus, Greater Noida, Uttar Pradesh</p>
+      </div>
+     </div>
+     <div class="social-links">
+      <div class="social-link" onclick="openLink('https://twitter.com')">
+       🐦
+      </div>
+      <div class="social-link" onclick="openLink('https://instagram.com')">
+       📷
+      </div>
+      <div class="social-link" onclick="openLink('https://linkedin.com')">
+       💼
+      </div>
+      <div class="social-link" onclick="openLink('https://discord.com')">
+       💬
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer>
+    <p>© 2024 Make It Happen. All rights reserved. Built with passion by the MIH Team.</p>
+   </footer>
+  </div>
+  <script>
+        const defaultConfig = {
+            hackathon_name: "MAKE IT HAPPEN",
+            tagline: "Transform Ideas Into Reality",
+            date: "March 15-17, 2024",
+            venue: "IIMT Campus",
+            about_mih: "Make It Happen is an annual hackathon that brings together the brightest minds in technology to solve real-world problems. Over 48 hours, participants collaborate, innovate, and build groundbreaking solutions across multiple domains. Join us for an unforgettable experience of learning, networking, and creation.",
+            organizers_text: "Organized by IIMT in collaboration with IIIT Delhi, in association with IIMT Ladder Business Foundation and Botlab Dynamics",
+            background_color: "#000000",
+            accent_color: "#dc2626",
+            text_color: "#ffffff",
+            font_family: "Rajdhani",
+            font_size: 16
+        };
+
+        async function onConfigChange(config) {
+            const customFont = config.font_family || defaultConfig.font_family;
+            const baseFontStack = 'sans-serif';
+            const baseSize = config.font_size || defaultConfig.font_size;
+
+            document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+            document.querySelectorAll('.hero-title, .logo, .section-title, .organizer-card h4, .domain-card h4, .prize-title, .faq-question, .partner-name, .contact-item h4').forEach(el => {
+                el.style.fontFamily = `'Orbitron', ${customFont}, ${baseFontStack}`;
+            });
+
+            document.getElementById('hackathonName').textContent = config.hackathon_name || defaultConfig.hackathon_name;
+            document.getElementById('tagline').textContent = config.tagline || defaultConfig.tagline;
+            document.getElementById('eventDate').textContent = config.date || defaultConfig.date;
+            document.getElementById('venue').textContent = config.venue || defaultConfig.venue;
+            document.getElementById('aboutMih').textContent = config.about_mih || defaultConfig.about_mih;
+            document.getElementById('organizersText').textContent = config.organizers_text || defaultConfig.organizers_text;
+
+            const bgColor = config.background_color || defaultConfig.background_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+
+            document.body.style.background = bgColor;
+            document.body.style.color = textColor;
+
+            document.querySelectorAll('.cta-button, .nav-links a:hover, .section-title::after, .hero-tagline, .domain-card:hover, .prize-title, .timeline-dot, .organizer-card h4, .domain-card h4, .faq-icon, .contact-item h4, .social-link').forEach(el => {
+                if (el.classList.contains('cta-button')) {
+                    el.style.background = `linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)`;
+                } else {
+                    el.style.color = accentColor;
+                }
+            });
+
+            document.body.style.fontSize = `${baseSize}px`;
+            document.querySelector('.hero-title').style.fontSize = `${baseSize * 3.75}px`;
+            document.querySelector('.hero-tagline').style.fontSize = `${baseSize * 1.25}px`;
+            document.querySelectorAll('.section-title').forEach(el => {
+                el.style.fontSize = `${baseSize * 2.2}px`;
+            });
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities: (config) => ({
+                    recolorables: [
+                        {
+                            get: () => config.background_color || defaultConfig.background_color,
+                            set: (value) => {
+                                window.elementSdk.config.background_color = value;
+                                window.elementSdk.setConfig({ background_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.accent_color || defaultConfig.accent_color,
+                            set: (value) => {
+                                window.elementSdk.config.accent_color = value;
+                                window.elementSdk.setConfig({ accent_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.text_color || defaultConfig.text_color,
+                            set: (value) => {
+                                window.elementSdk.config.text_color = value;
+                                window.elementSdk.setConfig({ text_color: value });
+                            }
+                        }
+                    ],
+                    borderables: [],
+                    fontEditable: {
+                        get: () => config.font_family || defaultConfig.font_family,
+                        set: (value) => {
+                            window.elementSdk.config.font_family = value;
+                            window.elementSdk.setConfig({ font_family: value });
+                        }
+                    },
+                    fontSizeable: {
+                        get: () => config.font_size || defaultConfig.font_size,
+                        set: (value) => {
+                            window.elementSdk.config.font_size = value;
+                            window.elementSdk.setConfig({ font_size: value });
+                        }
+                    }
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ['hackathon_name', config.hackathon_name || defaultConfig.hackathon_name],
+                    ['tagline', config.tagline || defaultConfig.tagline],
+                    ['date', config.date || defaultConfig.date],
+                    ['venue', config.venue || defaultConfig.venue],
+                    ['about_mih', config.about_mih || defaultConfig.about_mih],
+                    ['organizers_text', config.organizers_text || defaultConfig.organizers_text]
+                ])
+            });
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        function openLink(url) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.content-card, .organizer-card, .domain-card, .timeline-item, .prize-card, .partner-card, .faq-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c5636e895f13ca0',t:'MTc2OTY2MzMzNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
